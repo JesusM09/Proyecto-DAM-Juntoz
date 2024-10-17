@@ -9,9 +9,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 class MainActivity : AppCompatActivity() {
-    lateinit var navigation : BottomNavigationView
+    lateinit var navigation: BottomNavigationView
 
     private val mOnNavMenu = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
@@ -19,7 +18,6 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.commit {
                     replace<LoginFragment>(R.id.frameContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("replacement")
                 }
                 return@OnNavigationItemSelectedListener true
             }
@@ -27,7 +25,6 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.commit {
                     replace<RegisterFragment>(R.id.frameContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("replacement")
                 }
                 return@OnNavigationItemSelectedListener true
             }
@@ -39,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.commit {
                     replace<ProductsFragment>(R.id.frameContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("replacement")
                 }
                 return@OnNavigationItemSelectedListener true
             }
@@ -47,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.commit {
                     replace<CartFragment>(R.id.frameContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("replacement")
                 }
                 return@OnNavigationItemSelectedListener true
             }
@@ -55,29 +50,29 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.commit {
                     replace<OrderFragment>(R.id.frameContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("replacement")
                 }
                 return@OnNavigationItemSelectedListener true
             }
             R.id.itemLogout -> {
-                switchToLoginMenu()
                 supportFragmentManager.commit {
                     replace<LoginFragment>(R.id.frameContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("replacement")
                 }
-                return@OnNavigationItemSelectedListener true
+                navigation.post {
+                    switchToLoginMenu()
+                }
             }
-            else -> {return@OnNavigationItemSelectedListener false}
+            else -> {
+                return@OnNavigationItemSelectedListener false
+            }
         }
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -88,9 +83,8 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavMenu)
 
         supportFragmentManager.commit {
-            replace<CartFragment>(R.id.frameContainer)
+            replace<LoginFragment>(R.id.frameContainer)
             setReorderingAllowed(true)
-            addToBackStack("replacement")
         }
 
         navigation.selectedItemId = R.id.itemLogin
@@ -107,5 +101,4 @@ class MainActivity : AppCompatActivity() {
         navigation.inflateMenu(R.menu.navigation_menu_login_register)
         navigation.selectedItemId = R.id.itemLogin
     }
-
 }
