@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemProducts"
+        android:icon="@drawable/products_logo"
+        android:title="Catálogo"/>
+    <item
+        android:id="@+id/itemCart"
+        android:icon="@drawable/cart_logo"
+        android:title="Carrito de Compras"/>
+    <item
+        android:id="@+id/itemOrder"
+        android:icon="@drawable/order_logo"
+        android:title="Pedidos"/>
+    <item
+        android:id="@+id/itemLogout"
+        android:icon="@drawable/logout_logo"
+        android:title="Cerrar Sesión"/>
+</menu>
