@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "608733513162",
+    "project_id": "juntoz-firebase-db",
+    "storage_bucket": "juntoz-firebase-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608733513162:android:e6cdf5db6b3e9f1e117b33",
+        "android_client_info": {
+          "package_name": "com.example.proyecto_dam_juntoz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtZnTJg7Hb983_J2fpuMzVmwlhzMXME8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

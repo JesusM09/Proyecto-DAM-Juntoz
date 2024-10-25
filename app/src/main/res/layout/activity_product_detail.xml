@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Contenedor para los botones de "Atrás" y "Ir al carrito" -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+        <!-- Botón para regresar -->
+        <Button
+            android:id="@+id/btnAtras"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Atrás" />
+
+    </LinearLayout>
+
+    <!-- Imagen grande del producto -->
+<ImageView
+android:id="@+id/imgProductoDetalle"
+android:layout_width="match_parent"
+android:layout_height="300dp"
+android:scaleType="centerCrop"
+android:contentDescription="Imagen del producto" />
+
+    <!-- Nombre del producto -->
+<TextView
+android:id="@+id/tvNombreProductoDetalle"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textSize="24sp"
+android:textStyle="bold"
+android:paddingTop="16dp" />
+
+    <!-- Marca del producto -->
+<TextView
+android:id="@+id/tvMarcaProductoDetalle"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textSize="16sp"
+android:paddingTop="8dp" />
+
+    <!-- Descripción del producto -->
+<TextView
+android:id="@+id/tvDescripcionProductoDetalle"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textSize="16sp"
+android:paddingTop="8dp" />
+
+    <!-- Especificaciones del producto -->
+<TextView
+android:id="@+id/tvEspecificacionesProductoDetalle"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:paddingTop="8dp" />
+
+    <!-- Precio del producto -->
+<TextView
+android:id="@+id/tvPrecioProductoDetalle"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textSize="18sp"
+android:textColor="@android:color/holo_green_dark"
+android:paddingTop="8dp" />
+
+    <!-- Stock del producto -->
+<TextView
+android:id="@+id/tvStockProductoDetalle"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:paddingTop="4dp"
+android:textColor="@android:color/holo_red_dark" />
+
+    <!-- Botón para agregar al carrito -->
+<Button
+android:id="@+id/btnAgregarCarrito"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Agregar al carrito"
+android:layout_marginTop="16dp"
+android:backgroundTint="#673AB7"
+android:textColor="@android:color/white" />
+    </LinearLayout>

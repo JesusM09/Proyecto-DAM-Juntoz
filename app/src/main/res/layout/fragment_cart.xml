@@ -10,8 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="16dp">
 
+        <!-- Título del carrito -->
         <TextView
             android:id="@+id/tvCartTitle"
             android:layout_width="wrap_content"
@@ -19,9 +21,59 @@
             android:textColor="#A55EFF"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
-            android:textSize="30dp"
+            android:textSize="24sp"
             android:textAlignment="center"
-            android:text="¡Bienvenido al Carrito!"/>
-    </LinearLayout>
+            android:text="¡Bienvenido al Carrito!"
+            android:layout_marginBottom="16dp"/>
 
+        <!-- Lista de productos en el carrito -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCarrito"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!-- Total del carrito -->
+        <TextView
+            android:id="@+id/tvTotalCarrito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="8dp" />
+
+        <!-- Contenedor para los botones "Ir a pagar" y "Vaciar Carrito" -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="100dp"
+            android:orientation="horizontal">
+
+            <!-- Botón para ir a pagar -->
+            <Button
+                android:id="@+id/btnIrAPagar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#673AB7"
+                android:text="Ir a pagar"
+                android:textColor="@android:color/white" />
+
+            <!-- Espaciador para separar los botones -->
+            <View
+                android:layout_width="16dp"
+                android:layout_height="wrap_content" />
+
+            <!-- Botón para vaciar el carrito -->
+            <Button
+                android:id="@+id/btnVaciarCarrito"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#D32F2F"
+                android:text="Vaciar Carrito"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

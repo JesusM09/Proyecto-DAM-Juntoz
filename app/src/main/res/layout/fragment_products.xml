@@ -1,27 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductsFragment">
+    tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLogin"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProductos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="100dp"
+        />
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <!-- Spinner con ícono cuadrado -->
+        <!-- TextView para mostrar los productos -->
+        <Spinner
+            android:id="@+id/spinnerCategories"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_menu"
+            android:padding="8dp" />
+
+        <!-- Texto que muestra la categoría seleccionada -->
         <TextView
-            android:id="@+id/tvCartTitle"
+            android:id="@+id/tvSelectedCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#A55EFF"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
-            android:textSize="30dp"
-            android:textAlignment="center"
-            android:text="¡Bienvenido al Catálogo!"/>
-    </LinearLayout>
+            android:layout_gravity="start"
+            android:paddingBottom="8dp"
+            android:paddingLeft="40dp"
+            android:text="Categoría: "
+            android:paddingTop="12dp"
+            android:textSize="14sp" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/tvConsulta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,59 +1,104 @@
 package com.example.proyecto_dam_juntoz
 
+import AdaptadorProductos
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.proyecto_dam_juntoz.databinding.FragmentProductsBinding
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProductsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProductsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentProductsBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val categoryMap = mutableMapOf<String, DocumentReference>()
+    private val listaProductos = mutableListOf<EntidadProducto>()
+    private lateinit var adaptadorProductos: AdaptadorProductos
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_products, container, false)
+        _binding = FragmentProductsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProductsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Configurar el RecyclerView
+        binding.recyclerViewProductos.layoutManager = LinearLayoutManager(requireContext())
+        adaptadorProductos = AdaptadorProductos(listaProductos)
+        binding.recyclerViewProductos.adapter = adaptadorProductos
+
+        // Cargar las categorías desde Firestore y configurar el Spinner
+        loadCategories()
+    }
+
+    private fun loadCategories() {
+        db.collection("categorias")
+            .get()
+            .addOnSuccessListener { resultado ->
+                val categoryNames = mutableListOf<String>()
+                for (documento in resultado) {
+                    val nombreCategoria = documento.getString("nombreCategoria") ?: "Sin nombre"
+                    categoryMap[nombreCategoria] = documento.reference
+                    categoryNames.add(nombreCategoria)
+                }
+
+                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spinnerCategories.adapter = adapter
+
+                // Detectar cambios en la selección del Spinner
+                binding.spinnerCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                        val selectedCategory = categoryNames[position]
+                        val categoryRef = categoryMap[selectedCategory]
+
+                        // Actualizar el texto del TextView con la categoría seleccionada
+                        binding.tvSelectedCategory.text = "Categoría: $selectedCategory"
+
+                        if (categoryRef != null) {
+                            loadProductsByCategory(categoryRef)
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                    }
                 }
             }
+            .addOnFailureListener {
+                binding.tvConsulta.text = "No se pudieron cargar las categorías"
+            }
+    }
+
+    private fun loadProductsByCategory(categoryRef: DocumentReference) {
+        db.collection("productos")
+            .whereEqualTo("categoria", categoryRef)
+            .get()
+            .addOnSuccessListener { resultado ->
+                listaProductos.clear()
+                for (documento in resultado) {
+                    val producto = documento.toObject(EntidadProducto::class.java)
+                    listaProductos.add(producto)
+                }
+                adaptadorProductos.notifyDataSetChanged() // Actualizar el RecyclerView
+            }
+            .addOnFailureListener {
+                binding.tvConsulta.text = "No se pudieron cargar los productos"
+            }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

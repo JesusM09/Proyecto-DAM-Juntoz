@@ -23,6 +23,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity android:name=".ProductDetailActivity" />
+        <activity android:name=".CartFragment" />
     </application>
 
 </manifest>
