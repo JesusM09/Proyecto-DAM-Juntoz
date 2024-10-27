@@ -56,7 +56,7 @@ class AboutUsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(gMap: GoogleMap) {
         googleMap = gMap
-        val tiendaLocation = LatLng(-12.0959538, -77.0267139)
+        val tiendaLocation = LatLng(-12.095954486265176, -77.02413925521003)
         googleMap.addMarker(MarkerOptions().position(tiendaLocation).title("Nuestra Tienda"))
 
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
