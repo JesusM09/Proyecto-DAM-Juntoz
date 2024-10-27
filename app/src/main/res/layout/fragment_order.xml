@@ -6,11 +6,10 @@
     tools:context=".OrderFragment">
 
     <LinearLayout
-        android:id="@+id/linearLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tvCartTitle"
@@ -19,9 +18,24 @@
             android:textColor="#A55EFF"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
-            android:textSize="30dp"
-            android:textAlignment="center"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
             android:text="¡Bienvenido a la vista de pedidos!"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewOrders"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 </FrameLayout>
