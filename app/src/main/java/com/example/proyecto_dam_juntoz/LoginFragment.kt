@@ -1,37 +1,22 @@
 package com.example.proyecto_dam_juntoz
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.google.firebase.firestore.FirebaseFirestore
+import java.security.MessageDigest
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,41 +24,60 @@ class LoginFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
+        db = FirebaseFirestore.getInstance()
+
+        val etUsuario = view.findViewById<EditText>(R.id.etLogUsuario)
+        val etContrasena = view.findViewById<EditText>(R.id.etLogContrasena)
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
+
         btnLogin.setOnClickListener {
-            showAuthenticatedMessage()
-            val mainActivity = activity as MainActivity
-            mainActivity.switchToAuthenticatedMenu()
-            parentFragmentManager.commit {
-                replace<ProductsFragment>(R.id.frameContainer)
-                setReorderingAllowed(true)
-                addToBackStack(null)
+            val usuario = etUsuario.text.toString().trim()
+            val contrasenaIngresada = etContrasena.text.toString().trim()
+
+            if (usuario.isNotEmpty() && contrasenaIngresada.isNotEmpty()) {
+                val contrasenaEncriptada = encriptarContrasena(contrasenaIngresada)
+
+                db.collection("Usuarios").document(usuario).get()
+                    .addOnSuccessListener { document ->
+                        if (document.exists()) {
+                            val contrasenaGuardada = document.getString("contrasena")
+                            if (contrasenaGuardada == contrasenaEncriptada) {
+                                showAuthenticatedMessage()
+                                navigateToProducts()
+                            } else {
+                                Toast.makeText(context, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(context, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
             }
         }
         return view
+    }
+
+    private fun encriptarContrasena(contrasena: String): String {
+        val md = MessageDigest.getInstance("SHA-256")
+        val hashBytes = md.digest(contrasena.toByteArray())
+        return hashBytes.joinToString("") { "%02x".format(it) }
     }
 
     private fun showAuthenticatedMessage() {
         Toast.makeText(requireContext(), "Se ha autenticado correctamente", Toast.LENGTH_SHORT).show()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun navigateToProducts() {
+        val mainActivity = activity as MainActivity
+        mainActivity.switchToAuthenticatedMenu()
+        parentFragmentManager.commit {
+            replace<ProductsFragment>(R.id.frameContainer)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
     }
 }

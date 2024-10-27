@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterFragment"
-    android:background="#F7F7F7">
+    tools:context=".RegisterFragment">
 
 
     <LinearLayout
@@ -12,16 +11,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="#983DBB">
 
-        <TextView
-            android:id="@+id/tvRegisterTitle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#A55EFF"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
-            android:textSize="30dp"
-            android:text="¡Bienvenido a Juntoz!"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp">
+
+            <TextView
+                android:id="@+id/tvRegisterTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="¡Bienvenido a Juntoz!"
+                android:textAlignment="center"
+                android:textColor="#D7FC4C"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:id="@+id/etRegCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:textAlignment="center"
+                android:hint="Ingrese su Correo" />
+
+            <EditText
+                android:id="@+id/etRegUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:textAlignment="center"
+                android:hint="Ingrese su Usuario" />
+
+            <EditText
+                android:id="@+id/etRegContrasena"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:textAlignment="center"
+                android:hint="Ingrese su Contraseña"/>
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#D7FC4C"
+                android:text="Ingresar"
+                android:textColor="#A55EFF"
+                android:textSize="18dp" />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

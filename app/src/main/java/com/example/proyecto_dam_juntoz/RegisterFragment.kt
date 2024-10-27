@@ -1,59 +1,76 @@
 package com.example.proyecto_dam_juntoz
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import com.google.firebase.firestore.FirebaseFirestore
+import java.security.MessageDigest
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
+
+        db = FirebaseFirestore.getInstance()
+
+        val etCorreo = view.findViewById<EditText>(R.id.etRegCorreo)
+        val etUsuario = view.findViewById<EditText>(R.id.etRegUsuario)
+        val etContrasena = view.findViewById<EditText>(R.id.etRegContrasena)
+        val btnRegister = view.findViewById<Button>(R.id.btnRegister)
+
+        btnRegister.setOnClickListener {
+            val correo = etCorreo.text.toString().trim()
+            val usuario = etUsuario.text.toString().trim()
+            val contrasena = etContrasena.text.toString().trim()
+
+            if (correo.isNotEmpty() && usuario.isNotEmpty() && contrasena.isNotEmpty()) {
+                val contrasenaEncriptada = encriptarContrasena(contrasena)
+
+                val usuarioData = hashMapOf(
+                    "correo" to correo,
+                    "nombreUsuario" to usuario,
+                    "contrasena" to contrasenaEncriptada
+                )
+
+                db.collection("Usuarios").document(usuario).set(usuarioData)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                        navigateToLogin()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error al registrar: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(context, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_register.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun encriptarContrasena(contrasena: String): String {
+        val md = MessageDigest.getInstance("SHA-256")
+        val hashBytes = md.digest(contrasena.toByteArray())
+        return hashBytes.joinToString("") { "%02x".format(it) }
+    }
+
+    private fun navigateToLogin() {
+        parentFragmentManager.commit {
+            replace<LoginFragment>(R.id.frameContainer)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
     }
 }
