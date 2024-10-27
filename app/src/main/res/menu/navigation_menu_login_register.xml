@@ -9,6 +9,10 @@
         android:icon="@drawable/register_user_logo"
         android:title="Registrarse"/>
     <item
+        android:id="@+id/itemAboutUs"
+        android:icon="@drawable/info_logo"
+        android:title="Acerca de nosotros"/>
+    <item
         android:id="@+id/itemExit"
         android:icon="@drawable/exit_logo"
         android:title="Salir"/>

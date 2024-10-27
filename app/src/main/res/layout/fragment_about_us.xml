@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#8A38C9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Acerca de Juntoz.com"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvTitleHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historia"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvTitleMission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Misión"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvMission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvTitleValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nuestros Valores como Empresa"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvTitleOfferings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Qué Ofrecemos"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvOfferings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvTitleSocialCommitment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Compromiso Social"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvSocialCommitment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvTitleVisitUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Visítanos"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvVisitUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="16dp"
+            android:textColor="#FFFFFF" />
+
+        <FrameLayout
+            android:id="@+id/mapContainer"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:paddingBottom="100dp">
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+    </LinearLayout>
+</ScrollView>

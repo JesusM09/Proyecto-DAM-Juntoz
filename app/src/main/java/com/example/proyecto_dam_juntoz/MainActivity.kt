@@ -14,6 +14,13 @@ class MainActivity : AppCompatActivity() {
 
     private val mOnNavMenu = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when(item.itemId){
+            R.id.itemAboutUs -> {
+                supportFragmentManager.commit {
+                    replace<AboutUsFragment>(R.id.frameContainer)
+                    setReorderingAllowed(true)
+                }
+                return@OnNavigationItemSelectedListener true
+            }
             R.id.itemLogin -> {
                 supportFragmentManager.commit {
                     replace<LoginFragment>(R.id.frameContainer)
